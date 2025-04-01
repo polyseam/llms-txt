@@ -2,6 +2,9 @@
   "name": "@polyseam/llms-txt",
   "version": "1.0.0",
   "deno_version": "2.2.6",
+  "description": "Utility for parsing and formatting llms.txt files.",
+  "license": "Apache-2.0",
+
   "tasks": {
     "main": {
       "command": "deno run --allow-read --allow-write --allow-run=deno main.ts"
