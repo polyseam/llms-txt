@@ -25,6 +25,47 @@ export class LlmsTxtParseError extends LlmsTxtError {
 export class LlmsTxtLoadError extends LlmsTxtError {
 }
 
+/**
+ * Parses and represents the contents of a custom "llms.txt" formatted file.
+ *
+ * This class is responsible for processing a raw text input with a specific structure:
+ * - The first line must be a title prefixed with "# ".
+ * - The second line must be empty, acting as a separator.
+ * - The third line may provide an optional summary if it starts with "> ".
+ * - Subsequent lines are either extra information or sections specifying lists of markdown links.
+ *
+ * When encountering a section (a line starting with "## "), the parser collects bullet list entries (lines containing "- ")
+ * and converts them to parsed Markdown link objects.
+ *
+ * @remarks
+ * Parsing errors are thrown as {@link LlmsTxtParseError} if:
+ * - The title does not start with "# " or is too short.
+ * - The separator line (second line) is missing.
+ * - There are multiple top-level headings.
+ * - The summary block is incorrectly formatted when spanning multiple lines.
+ *
+ * @example
+ * ```typescript
+ * const rawText = `# My Project Title
+ *
+ * > A concise project summary
+ *
+ * Additional introductory text.
+ *
+ * ## Documentation
+ * - [README](./README.md): Project overview document
+ * - [CHANGELOG](./CHANGELOG.md): List of changes
+ * `;
+ *
+ * const llmsTxt = new LlmsTxt(rawText);
+ * console.log(llmsTxt.title);        // Outputs: "My Project Title"
+ * console.log(llmsTxt.summary);       // Outputs: "A concise project summary"
+ * console.log(llmsTxt.extraInfo);     // Outputs the extra introductory text
+ * console.log(llmsTxt.linksLists);    // Outputs the parsed link sections
+ * ```
+ *
+ * @public
+ */
 export class LlmsTxt {
   #rawText: string;
   title: string;

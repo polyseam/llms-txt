@@ -7,23 +7,18 @@ type LLMSTxtFmtResult = {
 };
 
 /**
- * Converts a markdown formatted string to an llms.txt formatted string.
+ * Converts a markdown string into properly formatted "llms.txt" text.
  *
- * This function splits the input text into its constituent lines assuming that the first three lines
- * represent the title, a blank line, and an initial summary line. If the summary line starts with "> ",
- * it inspects subsequent lines that also start with "> " and merges them into the summary until a line
- * that does not start with "> " is encountered. The remaining lines are appended without processing.
+ * The function processes a markdown text by extracting the title, a blank line,
+ * the first line of the summary, and subsequent content lines. If the summary line
+ * continues into multiple lines (i.e., lines beginning with "> "), these lines are
+ * merged into a single summary string. The resulting format maintains the original
+ * title and blank line, followed by the merged summary and remaining content.
  *
- * @param text - The input text in markdown format.
- * @returns The transformed string in llms txt format.
- *
- * @example
- * ```typescript
- * const input = "Title\n\n> Summary part 1\n> Summary part 2\nContent line";
- * const result = markdownToLlmsTxt(input);
- * // Result:
- * // "Title\n\n> Summary part 1 Summary part 2\nContent line"
- * ```
+ * @param text - The markdown formatted string that includes a title, a blank line,
+ *               a summary line possibly extending over multiple lines,
+ *               additional content, and links.
+ * @returns A transformed string in the "llms.txt" format.
  */
 export function markdownToLlmsTxt(text: string): string {
   const [title, blankspace, summaryLn, ...lines] = text.split("\n");
