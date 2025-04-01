@@ -1,4 +1,4 @@
-import { llmsTxt } from "./src/llms-txt.ts";
+import { llmsTxt } from "./src/cli.ts";
 
 if (import.meta.main) {
   console.log();

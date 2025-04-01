@@ -1,4 +1,0 @@
-# some reasonable project
-
-> used to validate that when a blockquote summary is too long and is split by other formatters
-> we will merge the content effectively

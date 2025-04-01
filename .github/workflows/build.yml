@@ -1,0 +1,28 @@
+name: Build and Release for JSR
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    permissions:
+      contents: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.2.6
+
+      - uses: actions/checkout@v4
+
+      - uses: polyseam/tag-matches-version@v1
+
+      - run: deno task checks
+
+      - run: deno task test
+
+      - name: jsr publish
+        run: deno publish

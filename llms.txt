@@ -1,9 +1,15 @@
-# Title
+# @polyseam/llms-txt
 
-> this is blockquote summary which extends far beyond 80 characters
-> which means most formatters like `deno fmt` will wrap it over multiple 
-> lines and that's actually against the [llms.txt](https://llmstxt.org) spec
+> used to ensure simple and correct use of [llms.txt](https://llmstxt.org)
 
-## Subtitle
+## documentation
 
-### Subsubtitle
+- [README.md](./README.md): Core project documentation
+
+## manifest
+
+- [deno.json](https://github.com/polyseam/llms-txt/main/deno.json)
+
+## published
+
+- [jsr:@polyseam/llms-txt](https://jsr.io/@polyseam/llms-txt)

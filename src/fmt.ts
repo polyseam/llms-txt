@@ -1,7 +1,5 @@
-import { Command } from "@cliffy/command";
-import * as path from "@std/path";
+import { cconsole } from "cconsole";
 
-type AbsolutePath = string;
 type DidChange = boolean;
 
 type LLMSTxtFmtResult = {
@@ -29,6 +27,7 @@ type LLMSTxtFmtResult = {
  */
 export function markdownToLlmsTxt(text: string): string {
   const [title, blankspace, summaryLn, ...lines] = text.split("\n");
+
   let mergeComplete = false;
 
   let summary = summaryLn;
@@ -37,7 +36,6 @@ export function markdownToLlmsTxt(text: string): string {
 
   // ensure that if the summary spans multiple lines, it is merged into one
   if (summary.startsWith("> ")) {
-    console.log();
     for (const line of lines) {
       if (!mergeComplete) {
         if (line.startsWith("> ")) {
@@ -46,7 +44,7 @@ export function markdownToLlmsTxt(text: string): string {
         } else {
           mergeComplete = true;
           finalLines.push(line);
-          // continue;
+          continue;
         }
       }
       finalLines.push(line);
@@ -78,7 +76,7 @@ export async function fmt(
   const d = new TextDecoder();
 
   if (code !== 0) {
-    console.error("Error formatting file:", d.decode(stderr));
+    cconsole.error("Error formatting file:", d.decode(stderr));
     await Deno.remove(llmsTxtMdPath);
     return {
       didChange: false,
@@ -94,29 +92,15 @@ export async function fmt(
       return { didChange: false };
     }
 
-    // `deno fmt` made changes but `llms.txt` formatting did not
-    if (llmsTxtFormatted === denoFormatted) {
-      await Deno.remove(llmsTxtMdPath);
-      return { didChange: true };
-    }
-
     await Deno.writeTextFile(llmsTxtMdPath, llmsTxtFormatted);
     await Deno.remove(llmsTxtPath);
     await Deno.rename(llmsTxtMdPath, llmsTxtPath);
+
+    console.log(llmsTxtPath);
+    console.log("Checked 1 file");
 
     return {
       didChange: true,
     };
   }
 }
-
-export const fmtCommand = new Command()
-  .description("fmt llms.txt file.")
-  .arguments("[dir:string]")
-  .action(async (_options, dir) => {
-    if (!dir) dir = Deno.cwd();
-    const result = await fmt(
-      path.join(dir, dir.endsWith("llms.txt") ? "" : "llms.txt"),
-    );
-    return result;
-  });
