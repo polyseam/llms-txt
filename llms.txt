@@ -1,9 +1,8 @@
 # Title
 
-> this is blockquote summary which extends far beyond 80 characters which meansmost formatters like `deno fmt` will wrap it over multiple lines that'sactually against the [llms.txt](https://llmstxt.org) spec
-> most formatters like `deno fmt` will wrap it over multiple lines that's
-> actually against the [llms.txt](https://llmstxt.org) spec
-
+> this is blockquote summary which extends far beyond 80 characters
+> which means most formatters like `deno fmt` will wrap it over multiple 
+> lines and that's actually against the [llms.txt](https://llmstxt.org) spec
 
 ## Subtitle
 
