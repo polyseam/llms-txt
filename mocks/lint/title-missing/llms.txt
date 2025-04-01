@@ -1,0 +1,2 @@
+The only necessary property of an llms.txt file is the heading.
+This doc does not have one!

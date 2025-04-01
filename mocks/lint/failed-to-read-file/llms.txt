@@ -1,0 +1,1 @@
+# my document here cannot be read because of file permisions
